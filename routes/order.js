@@ -145,7 +145,13 @@ exports.generate = function(req, res, next, menu) {
   }
   else {
     var order = generateOrder(menu, numPeople);
-    var output = (format == 'sms') ? smsify(order) : order;
+    var output = order;
+    
+    if (format == 'sms'){
+      output = smsify(order);
+    } else if (format == 'textit'){
+      output = { 'order': smsify(order) }
+    }
 
     res.send(output);
   }
